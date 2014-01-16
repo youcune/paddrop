@@ -27,5 +27,5 @@ Paddrop::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
-  config.dropbox_redirect_uri = 'http://localhost:3000/users/create'
+  config.dropbox_redirect_uri = 'http://localhost:3000/authorize'
 end

@@ -1,10 +1,10 @@
 class CreateSessions < ActiveRecord::Migration
   def change
     create_table :sessions do |t|
-      t.references :user, null: false, length: 16
-      t.string :sid, null: false, length: 16
-      t.boolean :is_deleted, null: false, defalut: false
+      t.references :user, null: false
+      t.string :sid, null: false, limit: 16
       t.datetime :expires_at, null: false
+      t.string :is_deleted, limit: 1, null: false, default: '0'
 
       t.timestamps
 

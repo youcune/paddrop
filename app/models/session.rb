@@ -11,6 +11,10 @@ class Session < ActiveRecord::Base
     super
   end
 
+  def save!
+    self.save || raise(RecordNotSaved)
+  end
+
   private
   # sidを生成して返す
   # @return [String] sid

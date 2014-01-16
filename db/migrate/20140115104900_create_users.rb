@@ -4,7 +4,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :user_id, null: false
       t.string :access_token, null: false
       t.string :default_path
-      t.boolean :is_deleted, null: false, defalut: false
+      t.string :is_deleted, limit: 1, null: false, default: '0'
 
       t.timestamps
 

@@ -7,12 +7,13 @@ class User < ActiveRecord::Base
   # @return [Session] session
   def self.dropbox_login(dropbox)
     ActiveRecord::Base.transaction do
-      user = User.where(user_id: dropbox[1]) || User.new
+      user = User.where(user_id: dropbox[1]).first || User.new
       user.user_id = dropbox[1]
       user.access_token = dropbox[0]
       user.save!
 
-      session = Session.new(user_id: user.id).save!
+      session = Session.new(user_id: user.id)
+      session.save!
       [user, session]
     end
   end
