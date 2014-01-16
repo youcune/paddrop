@@ -14,15 +14,28 @@
 ActiveRecord::Schema.define(version: 20140115104901) do
 
   create_table "sessions", force: true do |t|
-    t.string   "user_id",      null: false
-    t.string   "sid",          null: false
-    t.string   "access_token", null: false
-    t.string   "default_path"
+    t.integer  "user_id",    null: false
+    t.string   "sid",        null: false
+    t.boolean  "is_deleted", null: false
+    t.string   "created_by", null: false
+    t.string   "updated_by", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "sessions", ["id", "sid"], name: "index_sessions_on_id_and_sid", unique: true
-  add_index "sessions", ["user_id"], name: "index_sessions_on_user_id", unique: true
+  add_index "sessions", ["user_id", "sid"], name: "index_sessions_on_user_id_and_sid", unique: true
+
+  create_table "users", force: true do |t|
+    t.string   "user_id",      null: false
+    t.string   "access_token", null: false
+    t.string   "default_path"
+    t.boolean  "is_deleted",   null: false
+    t.string   "created_by",   null: false
+    t.string   "updated_by",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["user_id"], name: "index_users_on_user_id", unique: true
 
 end

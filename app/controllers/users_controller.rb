@@ -36,8 +36,21 @@ class UsersController < ApplicationController
 
   # GET /sessions/create
   def create
-    access_token = get_dropbox_oauth.finish(params)[0]
-    @files = DropboxClient.new(access_token).metadata('/')['contents'].map{ |f| f['path'] }
+    begin
+      dropbox_tuple = get_dropbox_oauth.finish(params)
+    rescue
+      flash[:danger] = 'Dropbox認証エラーです。再度お試しください。'
+      redirect_to root_path
+    end
+
+    begin
+      user, session = User.dropbox_login(dropbox_tuple)
+    rescue
+      flash[:danger] = '認証には成功しましたが、後続処理のエラーです。再度お試しください。'
+      redirect_to root_path
+    end
+
+    @files = DropboxClient.new(user.access_token).metadata('/')['contents'].map{ |f| f['path'] }
 
     #respond_to do |format|
     #  if @session.save

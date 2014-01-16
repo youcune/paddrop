@@ -5,8 +5,6 @@ class CreateUsers < ActiveRecord::Migration
       t.string :access_token, null: false
       t.string :default_path
       t.boolean :is_deleted, null: false, defalut: false
-      t.string :created_by, null: false
-      t.string :updated_by, null: false
 
       t.timestamps
 

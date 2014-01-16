@@ -1,11 +1,10 @@
 class CreateSessions < ActiveRecord::Migration
   def change
     create_table :sessions do |t|
-      t.references :user, null: false
-      t.string :sid, null: false
+      t.references :user, null: false, length: 16
+      t.string :sid, null: false, length: 16
       t.boolean :is_deleted, null: false, defalut: false
-      t.string :created_by, null: false
-      t.string :updated_by, null: false
+      t.datetime :expires_at, null: false
 
       t.timestamps
 
