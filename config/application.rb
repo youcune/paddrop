@@ -11,6 +11,7 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
+# Load Dropbox setting
 ENV.update YAML.load_file('config/dropbox.yml')
 
 module Paddrop
