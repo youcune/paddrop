@@ -11,7 +11,6 @@ class FilesController < ApplicationController
   def setup
     require_login
     @user = logged_in_user
-    byebug
     @path = request.path.sub(/^\/files\/?/, '/')
     @client = dropbox_client
   end

@@ -1,3 +1,14 @@
-%ul
-  - @files.each do |f|
-    %li= f.name
+- @files.each do |f|
+  .row.file
+    .col-sm-6.col-xs-12
+      - if f.dir?
+        %i.fa.fa-folder-o
+      - else
+        %i.fa.fa-file-o
+      = f.name
+    .col-sm-3.col-xs-6
+      %i.fa.fa-tachometer
+      = display_size f.bytes
+    .col-sm-3.col-xs-6
+      %i.fa.fa-clock-o
+      = display_datetime f.modified_at
