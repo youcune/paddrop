@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140115104901) do
+ActiveRecord::Schema.define(version: 20140118033412) do
+
+  create_table "contents", force: true do |t|
+    t.integer  "user_id",                             null: false
+    t.string   "name",                                null: false
+    t.string   "dir",                                 null: false
+    t.string   "is_dir",      limit: 1, default: "0", null: false
+    t.integer  "bytes",                               null: false
+    t.datetime "modified_at",                         null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "contents", ["dir"], name: "index_contents_on_dir"
+  add_index "contents", ["name", "dir"], name: "index_contents_on_name_and_dir"
 
   create_table "sessions", force: true do |t|
     t.integer  "user_id",                             null: false
@@ -27,7 +41,7 @@ ActiveRecord::Schema.define(version: 20140115104901) do
   create_table "users", force: true do |t|
     t.string   "user_id",                              null: false
     t.string   "access_token",                         null: false
-    t.string   "default_path"
+    t.string   "default_path",           default: "/", null: false
     t.string   "is_deleted",   limit: 1, default: "0", null: false
     t.datetime "created_at"
     t.datetime "updated_at"

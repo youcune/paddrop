@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :sessions
+  has_many :contents
 
   # Dropboxからの戻り値を判断してログインする
   # @param [Array] dropbox
@@ -14,7 +15,16 @@ class User < ActiveRecord::Base
 
       session = Session.new(user_id: user.id)
       session.save!
-      [user, session]
+      [user, [user.id, session.sid].join('-')]
     end
+  end
+
+  # Sessionを使ってログインする
+  # @param [Fixnum] user_id
+  # @param [String] sid
+  # @return [User | nil] user
+  def self.session_login(cookie)
+    user_id, sid = cookie.split('-')
+    User.joins(:sessions).where(id: user_id, sessions: {sid: sid}).first
   end
 end
