@@ -4,8 +4,13 @@ class FilesController < ApplicationController
   before_action :setup
 
   def get
-    @files = Content.ls(@user, @path)
-    render action: :index
+    if Content.dir?(@user, @path)
+      @files = Content.ls(@user, @path)
+      render action: :index
+    else
+      @content = Content.less(@user, @path)
+      render action: :show, formats: :html
+    end
   end
 
   def setup

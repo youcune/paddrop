@@ -1,0 +1,6 @@
+%ol.breadcrumb
+  - breadcrumb_elements(@path).each do |b|
+    - if b[1].blank?
+      %li.active= b[0]
+    - else
+      %li= link_to b[0], "/files#{b[1]}"

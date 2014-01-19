@@ -8,5 +8,4 @@ Paddrop::Application.routes.draw do
   get 'files/*path' => 'files#get'
   post 'files/*path' => 'files#create'
   put 'files/*path' => 'files#update'
-  delete 'files/*path' => 'files#routing'
 end

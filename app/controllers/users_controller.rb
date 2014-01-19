@@ -12,6 +12,5 @@ class UsersController < ApplicationController
 
   def setup
     require_login
-    @user = logged_in_user
   end
 end

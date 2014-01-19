@@ -1,9 +1,4 @@
-%ol.breadcrumb
-  - breadcrumb_elements(@path).each do |b|
-    - if b[1].blank?
-      %li.active= b[0]
-    - else
-      %li= link_to b[0], "/files#{b[1]}"
+= render 'breadcrumb'
 .row
   .col-sm-6.col-xs-12
     %h2{style: 'margin-top: 0;'}
@@ -13,28 +8,37 @@
     = form_tag update_user_path, method: :put do
       %p
         = hidden_field_tag :default_path, @path
-        = button_tag(class: 'btn btn-default') do
+        %a.btn.btn-primary
+          %i.fa.fa-folder
+          新規
+        %a.btn.btn-primary
+          %i.fa.fa-file
+          新規
+        = button_tag(class: 'btn btn-info') do
           - if @user.default_path == @path
             %i.fa.fa-check
-            このフォルダがデフォルトです
+            デフォルトです
           - else
             %i.fa.fa-gear
-            このフォルダをデフォルトに設定
-- @files.each do |f|
-  .row.file
-    - if f.dir?
-      = link_to path_to(f) do
+            デフォルトに設定
+- if @files.present?
+  - @files.each do |f|
+    = link_to path_to(f) do
+      .row.file
         .col-sm-6.col-xs-12.file-name
-          %i.fa.fa-folder-o
+          - if f.dir?
+            %i.fa.fa-folder-o
+          - else
+            %i.fa.fa-file-o
           = f.name
-    - else
-      = link_to path_to(f) do
-        .col-sm-6.col-xs-12.file-name
-          %i.fa.fa-file-o
-          = f.name
-    .col-sm-3.col-xs-6.file-size
-      %i.fa.fa-tachometer
-      = display_size f.bytes
-    .col-sm-3.col-xs-6.file-modified
-      %i.fa.fa-clock-o
-      = display_datetime f.modified_at
+        .col-sm-3.col-xs-6.file-size
+          %i.fa.fa-tachometer
+          = display_size f.bytes
+        .col-sm-3.col-xs-6.file-modified
+          %i.fa.fa-clock-o
+          = display_datetime f.modified_at
+- else
+  %p.text-center
+    %i.fa.fa-5x.fa-exclamation-triangle.text-warning
+    %br
+    テキストファイルがみつかりません
