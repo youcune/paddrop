@@ -7,6 +7,25 @@
     = csrf_meta_tags
   %body
     .container
+      - if request.path != root_path
+        .row{style: 'margin: 20px 0 10px;'}
+          .col-sm-6
+            %h1{style: 'margin-top: 0;'}
+              Paddrop
+          .col-sm-6.text-right
+            = link_to root_path, class: 'btn btn-info' do
+              %i.fa.fa-question
+              Help
+            - if @user.present?
+              = link_to sign_out_path, class: 'btn btn-danger' do
+                %i.fa.fa-power-off
+                Sign Out
+            - else
+              = link_to sign_out_path, class: 'btn btn-primary' do
+                %i.fa.fa-dropbox
+                Sign In
+      - flash.each do |type, msg|
+        %div{class: "alert alert-#{type}"}= msg.html_safe
       = yield
       %hr
       %footer.text-center

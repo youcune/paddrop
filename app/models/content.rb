@@ -31,18 +31,22 @@ class Content < ActiveRecord::Base
   # @param [String] dir
   # @return [Array] contents
   def self.ls(user, dir)
-    if Content.where(user_id: user.id, dir: dir).count.zero?
+    if Content.where(user_id: user.id, dir: dir.downcase).count.zero?
       Rails.logger.info("Getting metadata from Dropbox. user_id: #{user.id}, dir: #{dir}")
-      DropboxClient.new(user.access_token).metadata(dir)['contents'].each do |c|
-        Content.new_by_dropbox_content(user.id, c).save!
+      ActiveRecord::Base.transaction do
+        DropboxClient.new(user.access_token).metadata(dir)['contents'].each do |c|
+          Content.new_by_dropbox_content(user.id, c).save!
+        end
       end
+    else
+      Rails.logger.info("Skipped to get from Dropbox. user_id: #{user.id}, dir: #{dir}")
     end
 
-    Content.where(user_id: user.id, dir: dir)
+    Content.where(user_id: user.id, dir: dir.downcase).order(is_dir: :desc, name: :asc)
   end
 
   def self.split_path(path)
-    path =~ /^(.*\/)([^\/]+)/
-    [$1, $2]
+    path =~ /^\/?(.*)\/([^\/]+)/
+    [$1.downcase, $2]
   end
 end

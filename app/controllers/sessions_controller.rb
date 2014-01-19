@@ -10,7 +10,16 @@ class SessionsController < ApplicationController
 
   # GET /sign_in
   def sign_in
+    flash[:success] = 'サインインしました！'
     redirect_to get_dropbox_oauth.start
+  end
+
+  # GET
+  def sign_out
+    flash[:success] = 'サインアウトしました！'
+    @user.sessions.where(sid: cookies[:paddrop_sid].split('-').last).first.destroy
+    cookies[:paddrop_sid] = nil
+    redirect_to root_path
   end
 
   # GET /authorize

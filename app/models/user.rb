@@ -25,6 +25,6 @@ class User < ActiveRecord::Base
   # @return [User | nil] user
   def self.session_login(cookie)
     user_id, sid = cookie.split('-')
-    User.joins(:sessions).where(id: user_id, sessions: {sid: sid}).first
+    User.joins(:sessions).readonly(false).where(id: user_id, sessions: {sid: sid}).first
   end
 end

@@ -1,10 +1,13 @@
-.jumbotron
+.jumbotron{style: 'margin-top: 20px;'}
   %h1 Paddrop
   %p は、Dropbox上のテキストファイルをWeb上で編集できるツールです
   %p
     %a.btn.btn-primary.btn-lg{href: '/sign_in'}
       %i.fa.fa-dropbox
       Sign in
+    %a.btn.btn-info.btn-lg{href: '/help'}
+      %i.fa.fa-question
+      Help
 .row
   .col-md-4
     .text-center
@@ -16,12 +19,12 @@
       %i.fa.fa-5x.fa-refresh
     %h2.text-center Always in Sync
     %p Paddropのサーバ上にファイルの内容は保持しておらず、Dropboxのデータを直接読み書きするので他のマシンでもすぐ見れます
-    %p.small * ファイル名などの情報は一定期間保存する場合があります
+    %p.small * ファイル名などの情報は一定時間保存されます
   .col-md-4
     .text-center
       %i.fa.fa-5x.fa-github
     %h2.text-center Open Source
-    %p この手のサービスはすぐサービス終了しますよね、Paddropはソースコードを公開しているのでたとえ終了しても同じものをすぐ作れます
+    %p この手のサービスはすぐサービス終了しますよね、Paddropはソースコードを公開しているのでたとえ終了しても同じものをすぐ立てられます
     %p
       %a.btn.btn-default{href: 'https://github.com/youcune/paddrop'}
         %i.fa.fa-github

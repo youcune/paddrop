@@ -10,8 +10,9 @@ class CreateContents < ActiveRecord::Migration
 
       t.timestamps
 
-      t.index [:name, :dir]
-      t.index :dir
+      t.index [:user_id, :dir, :is_dir, :name], order: {user_id: :asc, dir: :asc, is_dir: :desc, name: :asc}
+      t.index [:user_id, :dir]
+      t.index [:created_at]
     end
   end
 end
